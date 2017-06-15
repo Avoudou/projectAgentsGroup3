@@ -15,7 +15,7 @@ public class AgentSimulDesktop {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = agentScreenWidth;
 		config.height = agentScreenHeight;
-
+int i;
 
 
 
