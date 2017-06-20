@@ -68,6 +68,7 @@ public class AgentFactory {
 		}
 		if (type == AgentType.EVADER) {
 			agent = new EvaderAgent(agentBody, renderComp);
+			agent.setAgentGroup(0);
 		}
 		if (fixture.getUserData() == null) {
 			System.out.println("LARGE problems");

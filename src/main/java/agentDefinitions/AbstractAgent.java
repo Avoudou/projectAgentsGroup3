@@ -13,6 +13,7 @@ public abstract class AbstractAgent {
 	protected Vector2 direction;
 	protected AgentState agentState;
 	protected boolean isDead;
+	protected int agentGroup;
 
 	public boolean isDead() {
 		return isDead;
@@ -71,5 +72,15 @@ public abstract class AbstractAgent {
 	public Vector2 getPossition() {
 		return physicsBody.getPosition().cpy();
 	}
+
+	public int getAgentGroup() {
+		return agentGroup;
+	}
+
+	public void setAgentGroup(int agentGroup) {
+		this.agentGroup = agentGroup;
+	}
+	
+	
 
 }
