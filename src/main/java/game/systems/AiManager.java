@@ -25,7 +25,7 @@ public class AiManager extends AbstractSystem {
 	@Override
 	public void proccessStep(AgentWorld world, float delta) {
 		// randomAi.proccessStep(world, delta);
-		//basicSwarmAi.runSwarmAi(world);
+		// basicSwarmAi.runSwarmAi(world);
 		evaderAi.runEvasionAi(world);
 		leaderAi.runLeaderAi(world);
 

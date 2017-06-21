@@ -20,8 +20,10 @@ public class SystemsManager {
 		systemList.add(new AiManager());
 		systemList.add(new MovementSystem());
 		systemList.add(new RenderSystem(camera, world));
+		systemList.add(new MarkDeadAgents());
 		systemList.add(new RemoveDeadAgents());
 		systemList.add(new ResetSimulationSystem());
+
 
 	}
 

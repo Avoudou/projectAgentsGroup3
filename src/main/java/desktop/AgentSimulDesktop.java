@@ -18,7 +18,7 @@ public class AgentSimulDesktop {
 
 
 
-		AgentSimulator agentSim = new AgentSimulator(new File("savedmaps/MainTestA.txt"), 120);
+		AgentSimulator agentSim = new AgentSimulator(new File("savedmaps/TestA.txt"), 120);
 
 		LwjglApplication app = new LwjglApplication(agentSim, config);
 

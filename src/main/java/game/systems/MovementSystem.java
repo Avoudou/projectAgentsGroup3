@@ -4,6 +4,7 @@ import game.AgentSimulatorConstants;
 import game.systems.abstractDef.AbstractSystem;
 import agentDefinitions.AbstractAgent;
 import agentDefinitions.AgentWorld;
+import agentDefinitions.EvaderAgent;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -36,8 +37,12 @@ public class MovementSystem extends AbstractSystem {
 		if (agent.getDirection() != null) {
 			Vector2 velocity = agent.getDirection().cpy().nor();
 
-	
-		agent.getPhysicsBody().setLinearVelocity(velocity.scl(maxVelosity));
+			if (agent.getClass() == EvaderAgent.class) {
+				agent.getPhysicsBody().setLinearVelocity(velocity.scl(AgentSimulatorConstants.maxVelosityEvaders));
+			} else {
+				agent.getPhysicsBody().setLinearVelocity(velocity.scl(AgentSimulatorConstants.maxVelosity));
+			}
+
 		}
 
 	}
