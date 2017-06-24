@@ -12,7 +12,7 @@ public class AgentSimulatorConstants {
 	public static final short GROUP_Obstacles = -2;
 
 	// radius of agent sight
-	public static final float detectionRadius = 100;
+	public static final float detectionRadius = 200;
 	// if <= this range evaders get removed
 	public static final int deathRadius = 25;
 
