@@ -22,7 +22,7 @@ public class AgentRayCastAgent implements com.badlogic.gdx.physics.box2d.RayCast
 	public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 
 		Integer agentId = (Integer) fixture.getUserData();
-		if (agentId == null) {
+		if (agentId < 0) {
 			if (fraction < obstacleFraction) {
 				obstacleFraction = fraction;
 			}

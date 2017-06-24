@@ -26,7 +26,6 @@ public class LeaderAi {
 	private final long targetUpdateRate = AgentSimulatorConstants.aiDecisionsUpdate;
 	private ObstacleEvasionCalculator obstacleEvasionCalculator;
 
-	private final float seperationRadius = 100;
 
 	public LeaderAi() {
 		super();
@@ -40,7 +39,7 @@ public class LeaderAi {
 		if (isTimeForUpdate()) {
 			// System.out.println("ai running");
 			ArrayList<ArrayList<AbstractAgent>> detectionList = detectionSystem.detectAllAgents(world);
-			AiHeatMap heatMap = new AiHeatMap(100, 100);
+			AiHeatMap heatMap = new AiHeatMap(100, 100, world);
 			HashSet<EvaderAgent> mapedAgents = new HashSet<EvaderAgent>();
 			heatMap.markObstacles(world);
 
@@ -69,31 +68,58 @@ public class LeaderAi {
 				// heatMap.printHeatMap();
 			}
 			sortAgents(persuerList, distanceList);
-
+			ArrayList<Vector2> targetList = new ArrayList<Vector2>();
+			// persuit state
 			if (mapedAgents.size() > 0) {
 				for (int k = 0; k < persuerList.size(); k++) {
 					PersuerAgent persuer = persuerList.get(k);
 					Vector2 targetPosition = heatMap.mostHeatedSpot(persuer);
-					System.out.println(targetPosition + " target pos");
-					persuer.setAgentState(AgentState.PERSUER_PERSUIT);
-					persuer.setDirection(targetPosition.cpy().sub(persuer.getPossition().cpy()));
+					targetList.add(targetPosition);
 					heatMap.applyCool(targetPosition.cpy());
 
 				}
+				for (int n = 0; n < persuerList.size(); n++) {
+					PersuerAgent persuer = persuerList.get(n);
+					Vector2 dirToClosestTarget = calculateClosestTargetDir(persuer.getPossition().cpy(), targetList);
+					persuer.setAgentState(AgentState.PERSUER_PERSUIT);
+					Vector2 finalDir = obstacleEvasionCalculator.calculateFinalDirAfterHeatMap(persuer,
+							dirToClosestTarget, world);
+					persuer.setDirection(finalDir);
+				}
+				// search state
 			} else {
-				System.out.println("runs");
+				// System.out.println("runs");
 				for (int k = 0; k < persuerList.size(); k++) {
 					PersuerAgent persuer = persuerList.get(k);
-					persuer.setAgentState(AgentState.PERSUER_SEARCH);
-					persuer.setDirection(new Vector2((float) (10 - Math.random() * 20),
-							(float) (10 - Math.random() * 20)).nor());
+					Vector2 targetPosition = heatMap.mostHeatedSpot(persuer);
+					targetList.add(targetPosition);
+					heatMap.applyCool(targetPosition.cpy());
 
 				}
-
+				for (int n = 0; n < persuerList.size(); n++) {
+					PersuerAgent persuer = persuerList.get(n);
+					Vector2 dirToClosestTarget = calculateClosestTargetDir(persuer.getPossition().cpy(), targetList);
+					persuer.setAgentState(AgentState.PERSUER_SEARCH);
+					persuer.setDirection(dirToClosestTarget);
+				}
 			}
 			startOfSim = System.currentTimeMillis();
 			
 		}
+	}
+
+	private Vector2 calculateClosestTargetDir(Vector2 pos, ArrayList<Vector2> targetList) {
+		Vector2 bestDir = new Vector2(Float.MAX_VALUE,Float.MAX_VALUE);
+		Vector2 bestTarget = null;
+		for (int k = 0; k < targetList.size(); k++) {
+			Vector2 distance = targetList.get(k).cpy().sub(pos.cpy());
+			if (distance.len() < bestDir.len()) {
+				bestDir = distance;	
+				bestTarget = targetList.get(k);
+			}
+		}
+		targetList.remove(bestTarget);
+		return bestDir;
 	}
 
 	private void sortAgents(ArrayList<PersuerAgent> persuerList, HashMap<PersuerAgent, Double> distanceList) {
@@ -122,13 +148,6 @@ public class LeaderAi {
 		}
 
 	}
-
-	
-
-
-
-
-
 	private boolean isTimeForUpdate() {
 		return trackTimeElapsed() >= targetUpdateRate;
 	}

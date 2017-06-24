@@ -1,6 +1,5 @@
 package game.systems.aiSubSystems;
 
-import game.AgentSimulatorConstants;
 import agentDefinitions.AbstractAgent;
 import agentDefinitions.AgentWorld;
 import agentDefinitions.EvaderAgent;
@@ -14,18 +13,61 @@ public class AiHeatMap {
 	private int unitSize;
 	private final int maxHeat = 1000;
 	private final int lengthOfaffectedUnits = 6;
+	private ObstacleMapper obsMapper;
 
-	public AiHeatMap(int xDim, int yDim) {
+	public AiHeatMap(int xDim, int yDim, AgentWorld world) {
 		heatmap = new double[xDim][yDim];
 		unitSize = 20;
+		this.obsMapper = new ObstacleMapper();
+		obsMapper.mapObstacles(world, heatmap, unitSize);
+		for (int i = 0; i < heatmap.length; i++) {
+			for (int j = 0; j < heatmap[0].length; j++) {
+				heatmap[i][j] = 10 * Math.random();
 
+			}
+
+		}
+
+	}
+
+
+	public void applyHeat(Vector2 position) {
+		int x = (int) (heatmap.length / 2 + (position.cpy().x / unitSize));
+		int y = (int) (heatmap.length / 2 + (position.cpy().y / unitSize));
+
+		for (int i = y - lengthOfaffectedUnits; i < y + lengthOfaffectedUnits; i++) {
+			for (int j = x - lengthOfaffectedUnits; j < x + lengthOfaffectedUnits; j++) {
+				if (i < 0 || j < 0 || i >= heatmap.length || j >= heatmap[0].length) {
+					continue;
+				}
+				int distance = Math.max(Math.abs(y - i), Math.abs(x - j));
+				heatmap[i][j] = heatmap[i][j] + (maxHeat / (1.0 * ((distance + 1))));
+				// System.out.println();
+			}
+		}
+	}
+
+	public void applyCool(Vector2 position) {
+		int x = (int) (heatmap.length / 2 + (position.cpy().x / unitSize));
+		int y = (int) (heatmap.length / 2 + (position.cpy().y / unitSize));
+		for (int i = y - (lengthOfaffectedUnits / 2); i < y + lengthOfaffectedUnits / 2; i++) {
+			for (int j = x - (lengthOfaffectedUnits / 2); j < x + lengthOfaffectedUnits / 2; j++) {
+				if (i < 0 || j < 0 || i >= heatmap.length || j >= heatmap[0].length) {
+					continue;
+				}
+				heatmap[i][j] = heatmap[i][j]
+ - (maxHeat / (0.95 * ((Math.max(Math.abs(y - i), Math.abs(x - j)) + 2))));
+
+			}
+		}
 	}
 
 
 	public Vector2 mostHeatedSpot(AbstractAgent agent) {
 		int agentMapXCoord = calculateAgentXCoord(agent);
 		int agentMapYCoord = calculateAgentYCoord(agent);
-		int radius = (int) (1.0 * AgentSimulatorConstants.detectionRadius / unitSize);
+		// int radius = (int) (1.0 * AgentSimulatorConstants.detectionRadius / unitSize);
+		int radius = (int) 1000;
 		int bestX = 0;
 		int bestY = 0;
 		int bestDistance = 0;
@@ -51,43 +93,12 @@ public class AiHeatMap {
 					}
 				}
 			}
-
+	
 		}
-
-		System.out.println(bestValue + " " + calculatePosition(bestX, bestY));
-		System.out.println();
+	
+		// System.out.println(bestValue + " " + calculatePosition(bestX, bestY));
+		// System.out.println();
 		return calculatePosition(bestY, bestX);
-	}
-
-	public void applyHeat(Vector2 position) {
-		int x = (int) (heatmap.length / 2 + (position.cpy().x / unitSize));
-		int y = (int) (heatmap.length / 2 + (position.cpy().y / unitSize));
-
-		for (int i = y - lengthOfaffectedUnits; i < y + lengthOfaffectedUnits; i++) {
-			for (int j = x - lengthOfaffectedUnits; j < x + lengthOfaffectedUnits; j++) {
-				if (i < 0 || j < 0 || i >= heatmap.length || j >= heatmap[0].length) {
-					continue;
-				}
-				int distance = Math.max(Math.abs(y - i), Math.abs(x - j));
-				heatmap[i][j] = heatmap[i][j] + (maxHeat / (1.0 * ((distance + 1))));
-				// System.out.println();
-			}
-		}
-	}
-
-	public void applyCool(Vector2 position) {
-		int x = (int) (heatmap.length / 2 + (position.cpy().x / unitSize));
-		int y = (int) (heatmap.length / 2 + (position.cpy().y / unitSize));
-		for (int i = y - lengthOfaffectedUnits / 2; i < y + lengthOfaffectedUnits / 2; i++) {
-			for (int j = x - lengthOfaffectedUnits / 2; j < x + lengthOfaffectedUnits / 2; j++) {
-				if (i < 0 || j < 0 || i >= heatmap.length || j >= heatmap[0].length) {
-					continue;
-				}
-				heatmap[i][j] = heatmap[i][j]
-						- (maxHeat / (100.0 * ((Math.max(Math.abs(y - i), Math.abs(x - j)) + 2))));
-
-			}
-		}
 	}
 
 
@@ -126,6 +137,9 @@ public class AiHeatMap {
 		}
 	}
 
+	public int getUnitSize() {
+		return unitSize;
+	}
 	private int calculateAgentXCoord(AbstractAgent agent) {
 	
 		return (int) (heatmap[0].length / 2 + (agent.getPossition().cpy().y / unitSize));

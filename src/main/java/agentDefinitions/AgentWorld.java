@@ -27,7 +27,7 @@ public class AgentWorld {
 		obstacleIdMap = new HashMap<Integer, Obstacles>();
 		setPhysicsWorld(new World(new Vector2(), true));
 		setRunning(true);
-		ArrayList agentGroup = new ArrayList<AbstractAgent>();
+		// ArrayList agentGroup = new ArrayList<AbstractAgent>();
 		
 
 	}

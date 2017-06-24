@@ -37,7 +37,7 @@ public AABBFindAllAgentsCallback(AgentWorld world, Vector2 origin, float radius)
 @Override
 	public boolean reportFixture(Fixture fixture) {
 		Integer agentId = (Integer) fixture.getUserData();
-		if (agentId == null) {
+		if (agentId <0) {
 			// Fixture was not an agent
 			return true;
 		}

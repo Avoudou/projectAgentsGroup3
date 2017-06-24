@@ -19,7 +19,7 @@ public class AgentRayCastObstacles implements com.badlogic.gdx.physics.box2d.Ray
 	public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
 		
 		Integer agentId = (Integer) fixture.getUserData();
-		if (agentId == null) {
+		if (agentId < 0) {
 
 			detectedObstacle = point.cpy();
 			

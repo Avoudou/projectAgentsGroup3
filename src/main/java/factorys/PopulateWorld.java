@@ -10,11 +10,13 @@ public class PopulateWorld {
 
 
 	public static void addAllAgents(AgentWorld world) {
-		addGroupedAgents(world, AgentType.PERSUER, 2, 1, 0, 0);
+		addGroupedAgents(world, AgentType.PERSUER, 5, 1, -80, -80);
 		// addGroupedAgents(world, AgentType.EVADER, 10, 0, 0, 200);
-		addGroupedAgents(world, AgentType.EVADER, 1, 0, 0, +125);
-		addGroupedAgents(world, AgentType.EVADER, 1, 0, 0, -125);
-
+		addGroupedAgents(world, AgentType.PERSUER, 1, 1, 160, 160);
+		addGroupedAgents(world, AgentType.EVADER, 5, 0, 180, 180);
+		// addGroupedAgents(world, AgentType.EVADER, 5, 0, 0, -125);
+		addGroupedAgents(world, AgentType.EVADER, 5, 0, 180, -180);
+		addGroupedAgents(world, AgentType.EVADER, 5, 0, -180, -180);
 	}
 
 	private static void addGroupedAgents(AgentWorld world, AgentType type, int count,int numberOfGroups, int x, int y) {

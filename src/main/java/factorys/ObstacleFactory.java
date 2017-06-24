@@ -17,7 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class ObstacleFactory {
 	private World physicsWorld;
-	private static int obstaclesIdNumber = 1000;
+	private static int obstaclesIdNumber = 1;
 	private HashMap<Integer, Obstacles> idMap;
 
 	public ObstacleFactory(World physicsWorld, HashMap<Integer, Obstacles> idMap) {
@@ -43,7 +43,7 @@ public class ObstacleFactory {
 		fixtureDef.filter.groupIndex = AgentSimulatorConstants.GROUP_Obstacles;
 		obstacleBody.createFixture(fixtureDef);
 		// boolean isObstacle = true;
-		// obstacleBody.setUserData(new ObstacleUserData());
+		obstacleBody.getFixtureList().get(0).setUserData(new Integer(-obstaclesIdNumber));
 		// Clean up after ourselves
 		obstacleShape.dispose();
 
@@ -51,8 +51,8 @@ public class ObstacleFactory {
 
 		Obstacles obstacle = new Obstacles(obstacleBody, renderComp, listOfVertices);
 		Integer id = (Integer) obstacleBody.getUserData();
-		// idMap.put(id, obstacle);
-		// obstaclesIdNumber++;
+		idMap.put(id, obstacle);
+		obstaclesIdNumber++;
 		return obstacle;
 
 	}

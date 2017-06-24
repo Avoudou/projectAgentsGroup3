@@ -67,4 +67,30 @@ public class ObstacleEvasionCalculator {
 		return ret.nor().scl(1);
 	}
 
+	public Vector2 calculateFinalDirAfterHeatMap(AbstractAgent agent, Vector2 directionToTarget, AgentWorld world) {
+		Vector2 startPoint = agent.getPossition().cpy().add(new Vector2((float) 0.1,(float) 0.1));
+		Vector2 endPoint = startPoint.cpy().add((directionToTarget.cpy()).nor().scl((float) (obstacleDetRAdius / 2)));
+		Vector2 finaldir = null;
+
+		AgentRayCastObstacles rayCast = new AgentRayCastObstacles(world);
+		world.getPhysicsWorld().rayCast(rayCast, startPoint, endPoint);
+		if (rayCast.getDetectedObstacle() == null) {
+			// System.out.println("no cchange");
+			finaldir = directionToTarget;
+			
+		} else {
+			// Vector2 agentToColision = (agent.getPossition().cpy().sub(rayCast.getDetectedObstacle().cpy()));
+			// if (agentToColision.len() <= obstacleDetRAdius) {
+			// System.out.println("change");
+			int mult = (int) Math.signum(Math.random() - 0.5);
+			System.out.println(mult + " mult");
+			Vector2 newDir = directionToTarget.cpy().rotate(90 * mult);
+			finaldir = newDir;
+			// }
+		}
+
+			
+		return finaldir;
+	}
+
 }

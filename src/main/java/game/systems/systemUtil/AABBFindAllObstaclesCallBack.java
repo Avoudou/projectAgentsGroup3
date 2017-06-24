@@ -33,21 +33,21 @@ public class AABBFindAllObstaclesCallBack implements QueryCallback {
 	@Override
 	public boolean reportFixture(Fixture fixture) {
 		Integer obstacleId = (Integer) fixture.getUserData();
-		if (obstacleId == null) {
+		if (obstacleId > 0) {
 			// Fixture was not an obstacle
 			return true;
 		}
 
 		Obstacles obs = world.getObstacleIdMap().get(obstacleId);
-		Vector2 position = obs.getPhysicsBody().getPosition();
-		if (position.dst(origin) < radius) {
+		// Vector2 position = obs.getPhysicsBody().getPosition();
+		// if (position.dst(origin) < radius) {
 			detectedObstacles.add(obs);
-		}
-
+		// }
+		// System.out.println(detectedObstacles.size());
 		return true;
 	}
 
-	public ArrayList<Obstacles> getDetectedAgents() {
+	public ArrayList<Obstacles> getDetectedObstacles() {
 		return detectedObstacles;
 	}
 }
