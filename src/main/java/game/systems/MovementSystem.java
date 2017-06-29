@@ -14,7 +14,7 @@ public class MovementSystem extends AbstractSystem {
 	private int maxVelocityEvaders = 0;
 
 	private long startOfSim;
-	private final long movementUpdateRateMillsec = 100;
+	private final long movementUpdateRateMillsec = 20;
 
 	public MovementSystem() {
 		startOfSim = System.currentTimeMillis();
