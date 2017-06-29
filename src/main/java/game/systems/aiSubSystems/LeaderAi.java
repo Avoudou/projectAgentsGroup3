@@ -39,7 +39,7 @@ public class LeaderAi {
 		if (isTimeForUpdate()) {
 			// System.out.println("ai running");
 			ArrayList<ArrayList<AbstractAgent>> detectionList = detectionSystem.detectAllAgents(world);
-			AiHeatMap heatMap = new AiHeatMap(100, 100, world);
+			AiHeatMap heatMap = new AiHeatMap(300, 300, world);
 			HashSet<EvaderAgent> mapedAgents = new HashSet<EvaderAgent>();
 			heatMap.markObstacles(world);
 

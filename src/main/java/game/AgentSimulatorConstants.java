@@ -21,7 +21,7 @@ public class AgentSimulatorConstants {
 	// Agent Velocity
 	public static final int maxVelosity = 20;
 
-	public static final int maxVelosityEvaders = 20;
+	public static final int maxVelosityEvaders = 19;
 
 	// public static final int obsDetectionRadius = 100;
 }

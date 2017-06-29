@@ -56,7 +56,7 @@ public class AiHeatMap {
 					continue;
 				}
 				heatmap[i][j] = heatmap[i][j]
- - (maxHeat / (0.95 * ((Math.max(Math.abs(y - i), Math.abs(x - j)) + 2))));
+ - (maxHeat / (2 * ((Math.max(Math.abs(y - i), Math.abs(x - j)) + 1))));
 
 			}
 		}
@@ -126,8 +126,8 @@ public class AiHeatMap {
 
 			for (int j = 0; j < heatmap[0].length; j++) {
 				if (heatmap[i][j] == 1000) {
-					System.out.print(heatmap[i][j] + " ");
-					System.out.println(calculatePosition(i, j));
+					// System.out.print(heatmap[i][j] + " ");
+					// System.out.println(calculatePosition(i, j));
 
 				}
 

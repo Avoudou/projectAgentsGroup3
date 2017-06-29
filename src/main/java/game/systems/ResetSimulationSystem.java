@@ -14,6 +14,7 @@ import agentDefinitions.EvaderAgent;
 public class ResetSimulationSystem extends AbstractSystem {
 
 	private long simulationStartMs;
+	// private int counter=0;
 
 	public static ArrayList<Double> timeTakenPerSimulation = new ArrayList<Double>();
 
@@ -26,11 +27,12 @@ public class ResetSimulationSystem extends AbstractSystem {
 		if (!anyEvaderLeftAlive(world)) {
 			for (int i = 0; i < world.getAllAgents().size(); i++) {
 				world.getAllAgents().get(i).setDead(true);
+
 			}
 			double timeTaken = (System.currentTimeMillis() - simulationStartMs) / 1000.0;
 			timeTakenPerSimulation.add(timeTaken);
 
-			int numRunsPerExperiment = 20;
+			int numRunsPerExperiment = 10;
 			if (timeTakenPerSimulation.size() == numRunsPerExperiment) {
 				System.out.println(timeTakenPerSimulation);
 				setNewParameters();

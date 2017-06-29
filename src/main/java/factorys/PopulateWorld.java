@@ -10,13 +10,27 @@ public class PopulateWorld {
 
 
 	public static void addAllAgents(AgentWorld world) {
-		addGroupedAgents(world, AgentType.PERSUER, 5, 1, -80, -80);
+
+		addGroupedAgents(world, AgentType.PERSUER, 5, 1, -250, -250);
+		addGroupedAgents(world, AgentType.PERSUER, 1, 1, 50, 50);
+		addGroupedAgents(world, AgentType.EVADER, 3, 0, 200, 200);
+		addGroupedAgents(world, AgentType.EVADER, 3, 0, 200, -200);
+		addGroupedAgents(world, AgentType.EVADER, 3, 0, -200, 200);
+		// addGroupedAgents(world, AgentType.EVADER, 1, 0, -100, 0);
+		// addGroupedAgents(world, AgentType.EVADER, 1, 0, 0, -150);
+
+		// addGroupedAgents(world, AgentType.PERSUER, 20, 1, 0, -0);
+		// addGroupedAgents(world, AgentType.EVADER, 5, 0, 180, -180);
+		// addGroupedAgents(world, AgentType.EVADER, 5, 0, -180, -180);
+
+		// addGroupedAgents(world, AgentType.PERSUER, 10, 1, 0, 0);
+
+		// addGroupedAgents(world, AgentType.EVADER, 5, 0, 180, -180);
+		// addGroupedAgents(world, AgentType.EVADER, 5, 0, -180, -180);
 		// addGroupedAgents(world, AgentType.EVADER, 10, 0, 0, 200);
-		addGroupedAgents(world, AgentType.PERSUER, 1, 1, 160, 160);
-		addGroupedAgents(world, AgentType.EVADER, 5, 0, 180, 180);
+		// addGroupedAgents(world, AgentType.PERSUER, 1, 1, 160, 160);
+		// addGroupedAgents(world, AgentType.EVADER, 5, 0, 180, 180);
 		// addGroupedAgents(world, AgentType.EVADER, 5, 0, 0, -125);
-		addGroupedAgents(world, AgentType.EVADER, 5, 0, 180, -180);
-		addGroupedAgents(world, AgentType.EVADER, 5, 0, -180, -180);
 	}
 
 	private static void addGroupedAgents(AgentWorld world, AgentType type, int count,int numberOfGroups, int x, int y) {
@@ -39,7 +53,7 @@ public class PopulateWorld {
 				AbstractAgent agent = factory.createAgent(new Vector2(x, y), type);
 				agent.setAgentGroup(agentGroup);
 				world.addAgent(agent);
-				System.out.println(agent.getAgentGroup());
+					// System.out.println(agent.getAgentGroup());
 				}
 			}
 		}

@@ -83,7 +83,7 @@ public class ObstacleEvasionCalculator {
 			// if (agentToColision.len() <= obstacleDetRAdius) {
 			// System.out.println("change");
 			int mult = (int) Math.signum(Math.random() - 0.5);
-			System.out.println(mult + " mult");
+			// System.out.println(mult + " mult");
 			Vector2 newDir = directionToTarget.cpy().rotate(90 * mult);
 			finaldir = newDir;
 			// }
